@@ -8,6 +8,7 @@ run-celery-go:
 	celery -A worker_go worker --without-heartbeat --without-gossip --without-mingle --loglevel=INFO
 # cd example 
 #pip install celery
+# pip install celery==4.4.7
 #go run worker.go
 #go run worker.go&
 #go run client.go

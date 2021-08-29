@@ -6,7 +6,7 @@ package main
 
 import (
 	"fmt"
-	"math/rand"
+	"log"
 	"reflect"
 	"time"
 
@@ -18,7 +18,7 @@ func get_value_from_multiple_return(val ...interface{}) []interface{} {
 }
 
 // Run Celery Worker First!
-// celery -A worker worker --loglevel=debug --without-heartbeat --without-mingle
+// celery -A worker_go worker --without-heartbeat --without-gossip --without-mingle --loglevel=INFO
 func main() {
 
 	// create RabbitMQ connection
@@ -33,9 +33,8 @@ func main() {
 
 	// prepare arguments
 	taskName := "worker_go.add"
-	// taskName := "worker"
-	argA := rand.Intn(10)
-	argB := rand.Intn(10)
+	argA := 5456
+	argB := 2878
 
 	// run task
 	asyncResult, err := cli.Delay(taskName, argA, argB)
@@ -60,10 +59,12 @@ func main() {
 	// fmt.Println(cli)
 	// get results from backend with timeout
 
-	res, err := asyncResult.Get(3 * time.Second)
+	// get results from backend with timeout
+	res, err := asyncResult.Get(10 * time.Second)
 	if err != nil {
-		fmt.Println(err)
-	} else {
-		fmt.Printf("Result: %v of type: %v\n", res, reflect.TypeOf(res))
+		panic(err)
 	}
+
+	log.Printf("result: %+v of type %+v", res, reflect.TypeOf(res))
+
 }

@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/gocelery/gocelery"
+	"github.com/danigunawan/go-sync-async-distributed-task/gocelery"
 	"github.com/gomodule/redigo/redis"
 )
 
