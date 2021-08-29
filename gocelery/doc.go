@@ -21,4 +21,4 @@ Celery must be configured to use json instead of default pickle encoding. This i
     CELERY_RESULT_SERIALIZER='json'
     CELERY_ENABLE_UTC=True
 */
-package gocelery
+package faceidlib
