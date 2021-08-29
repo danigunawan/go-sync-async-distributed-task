@@ -30,17 +30,17 @@ func main() {
 	celeryBackend := gocelery.NewAMQPCeleryBackend(url_amqp)
 
 	// initialize celery client
-	celeryClient, _ := gocelery.NewCeleryClient(celeryBroker, celeryBackend, 5) // number of workers
+	cli, _ := gocelery.NewCeleryClient(celeryBroker, celeryBackend, 5) // number of workers
 
 	// register task
-	celeryClient.Register("worker_go.add", add)
+	cli.Register("worker_go.add", add)
 
 	// start workers (non-blocking call)
-	celeryClient.StartWorker()
+	cli.StartWorker()
 
 	// wait for client request
 	time.Sleep(100000 * time.Second)
 
 	// stop workers gracefully (blocking call)
-	celeryClient.StopWorker()
+	cli.StopWorker()
 }

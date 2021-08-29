@@ -1,0 +1,7 @@
+not enough arguments in call to uuid.Must #70
+
+https://github.com/satori/go.uuid/issues/70
+
+$ go mod edit -replace=github.com/satori/go.uuid@v1.2.0=github.com/satori/go.uuid@master
+$ go mod tidy
+$ go build

@@ -6,6 +6,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"math/rand"
 	"reflect"
 	"time"
@@ -54,16 +55,18 @@ func main() {
 	// 	fmt.Println(err)
 	// }
 	// fmt.Println(asyncResult.Ready())
-	// fmt.Println(asyncResult.TaskID)
+	fmt.Println(asyncResult.TaskID)
 	// fmt.Println(asyncResult.AsyncGet())
 	// fmt.Println(asyncResult.GetResult("a70e8c97-a109-40f3-8acb-49ab749e58d3"))
 	// fmt.Println(cli)
 	// get results from backend with timeout
-
-	res, err := asyncResult.Get(3 * time.Second)
+	fmt.Println(AsyncGetByTaskID("ss"))
+	// get results from backend with timeout
+	res, err := asyncResult.Get(10 * time.Second)
 	if err != nil {
-		fmt.Println(err)
-	} else {
-		fmt.Printf("Result: %v of type: %v\n", res, reflect.TypeOf(res))
+		panic(err)
 	}
+
+	log.Printf("result: %+v of type %+v", res, reflect.TypeOf(res))
+
 }

@@ -18,7 +18,7 @@ func get_value_from_multiple_return(val ...interface{}) []interface{} {
 }
 
 // Run Celery Worker First!
-// celery -A worker_go worker --without-heartbeat --without-gossip --without-mingle --loglevel=INFO
+// celery -A worker_py worker --without-heartbeat --without-gossip --without-mingle --loglevel=INFO
 func main() {
 
 	// create RabbitMQ connection
@@ -32,7 +32,7 @@ func main() {
 	)
 
 	// prepare arguments
-	taskName := "worker_go.add"
+	taskName := "worker_py.add"
 	argA := 5456
 	argB := 2878
 
@@ -53,7 +53,7 @@ func main() {
 	// 	fmt.Println(err)
 	// }
 	// fmt.Println(asyncResult.Ready())
-	// fmt.Println(asyncResult.TaskID)
+	fmt.Println(asyncResult.TaskID)
 	// fmt.Println(asyncResult.AsyncGet())
 	// fmt.Println(asyncResult.GetResult("a70e8c97-a109-40f3-8acb-49ab749e58d3"))
 	// fmt.Println(cli)

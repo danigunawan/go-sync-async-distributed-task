@@ -154,6 +154,25 @@ func (ar *AsyncResult) AsyncGet() (interface{}, error) {
 	return val.Result, nil
 }
 
+// AsyncGet gets actual result from backend and returns nil if not available
+func (ar *AsyncResult) AsyncGetByTaskID(TaskID string) (interface{}, error) {
+	if ar.result != nil {
+		return ar.result.Result, nil
+	}
+	val, err := ar.backend.GetResult(TaskID)
+	if err != nil {
+		return nil, err
+	}
+	if val == nil {
+		return nil, err
+	}
+	if val.Status != "SUCCESS" {
+		return nil, fmt.Errorf("error response status %v", val)
+	}
+	ar.result = val
+	return val.Result, nil
+}
+
 // Ready checks if actual result is ready
 func (ar *AsyncResult) Ready() (bool, error) {
 	if ar.result != nil {
