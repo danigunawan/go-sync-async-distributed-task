@@ -89,10 +89,16 @@ func (cc *CeleryClient) delay(task *TaskMessage) (*AsyncResult, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	fmt.Println("delay")
+	fmt.Println(task.ID)
+	fmt.Println(cc.backend)
+
 	return &AsyncResult{
 		TaskID:  task.ID,
 		backend: cc.backend,
 	}, nil
+
 }
 
 // CeleryTask is an interface that represents actual task
@@ -133,6 +139,13 @@ func (ar *AsyncResult) Get(timeout time.Duration) (interface{}, error) {
 			return val, nil
 		}
 	}
+}
+
+// Get gets actual result from backend
+// It blocks for period of time set by timeout and returns error if unavailable
+func (ar *AsyncResult) GetByID(TaskID string) interface{} {
+	val, _ := ar.AsyncGetByTaskID(TaskID)
+	return val
 }
 
 // AsyncGet gets actual result from backend and returns nil if not available
